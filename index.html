@@ -1,0 +1,59 @@
+<!-- Team PayPal
+ Class Exercise-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay with PayPal</title>
+
+    <!-- STEP 1: Adding in our PayPal SDK script -->
+    <!-- '__FILL_IN_CLIENT_ID__' is replaced with your PayPal sandbox client ID -->
+    <!-- For our class exercise, use 'sb' as the client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=__FILL_IN_CLIENT_ID__"></script>
+</head>
+<body>
+    <h1>Pay with PayPal</h1>
+
+    <!-- STEP 2: Adding our PayPal Button Container -->
+    <!-- This is where the PayPal button will be rendered -->
+    <!--In a div, enter the id 'paypal-button-container'-->
+
+    <!-- STEP 3: Adding an input field to enter the payment amount -->
+    <!--Hint: you need an input type, id, placeholder message, and value-->
+
+    <script>
+        // Rendering our PayPal Button
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                // STEP 4: Dynamically setting the amount from the input field
+                // Fill in with the ID FROM STEP 3
+                var amount = document.getElementById('FILL_IN_HERE').value;
+
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: amount 
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // STEP 5: Adding a custom confirmation message
+                    // Customize a message thanking the payer for their purchase, displaying their name and payment amount
+                    alert('YOUR THANK YOU MESSAGE HERE');
+                });
+            },
+            onError: function(err) {
+                // STEP 6: Displaying an error message
+                // Fill in the alert to inform the user something went wrong
+                alert('YOUR ERROR MESSAGE HERE');
+                console.error('Error during payment process:', err);
+            }
+        }).render('#paypal-button-container');  // Render the PayPal button
+    </script>
+
+</body>
+</html>
